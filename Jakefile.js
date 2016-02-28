@@ -1,15 +1,11 @@
 
 (function(){
     "use strict";
-    console.log("\n\n BUILD OK");
     
     desc("Default Build");
     task("default",function(){
-        console.log("Hello, I am the default task!!!!");    
+        console.log("\n\nBUILD OK");
+
     });
 
-    desc("Pure stupidity");
-    task("gooble",function(){
-        console.log("Gooble , gooble");
-    });
 }());
