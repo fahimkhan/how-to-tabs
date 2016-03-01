@@ -1,17 +1,25 @@
-/* globals desc:false,task:false,complete:false,fail:false */
+/* globals jake:false,desc:false,task:false,complete:false,fail:false */
 
 (function(){
     "use strict";
     
     var semver = require("semver");
     var jshint = require("simplebuild-jshint");
-
+    
+    /*General purpose Task*/
     desc("Default Build");
     task("default",["version","lint"],function(){
         console.log("\n\nBUILD OK");
 
     });
-    
+
+    desc("Run a localhost server");
+    task("run",function(){
+        console.log("Run http-server here");
+        jake.exec("node node_modules/http-server/bin/http-server src",{interactive:true},complete);
+    });
+   
+    /*Supporting Task*/
     desc("Check Node Version");
     task("version",function(){
     console.log("Checking Node Version:");
