@@ -1,3 +1,4 @@
+/* globals desc:false,task:false,complete:false,fail:false */
 
 (function(){
     "use strict";
@@ -28,8 +29,27 @@
         process.stdout.write("Linting JavaScript:");
         jshint.checkFiles({
             files:"Jakefile.js",
-            options:{},
-            globals:{}
+            options:{
+                bitwise:true,
+                curly:true,
+                eqeqeq:true,
+                forin:true, //Not recomended
+                freeze:true,
+                futurehostile:true,
+                latedef:"nofunc",
+                noarg:true,
+                nocomma:true,
+                nonbsp:true,
+                nonew:true,
+                strict:true,
+                undef:true,
+
+
+                node:true,
+                browser:true
+            },
+            globals:{
+            }
         },complete,fail);
     },{async:true});
 
