@@ -1,70 +1,77 @@
-/* globals jake:false,desc:false,task:false,complete:false,fail:false */
+// Copyright (c) 2015 Titanium I.T. LLC. All rights reserved. For license, see "README" or "LICENSE" file.
+/* globals jake:false, desc:false, task:false, complete:false, fail:false */
 
-(function(){
-    "use strict";
-    
-    var semver = require("semver");
-    var jshint = require("simplebuild-jshint");
-    var karma = require("simplebuild-karma");
+(function() {
+	"use strict";
 
-    var KARMA_CONFIG = "karma.conf.js";
-    
-    /*General purpose Task*/
+	var semver = require("semver");
+	var jshint = require("simplebuild-jshint");
+	var karma = require("simplebuild-karma");
+
+	var KARMA_CONFIG = "karma.conf.js";
+
+	//**** General-purpose tasks
+
 	desc("Start the Karma server (run this first)");
-		task("karma", function() {
-			console.log("Starting Karma server:");
-			karma.start({
-				configFile: KARMA_CONFIG
-			}, complete, fail);
-		}, { async: true });
+	task("karma", function() {
+		console.log("Starting Karma server:");
+		karma.start({
+			configFile: KARMA_CONFIG
+		}, complete, fail);
+	}, { async: true });
+
+	desc("Default build");
+	task("default", [ "version", "lint", "test" ], function() {
+		console.log("\n\nBUILD OK");
+	});
+
+	desc("Run a localhost server");
+	task("run", function() {
+		jake.exec("node node_modules/http-server/bin/http-server src", { interactive: true }, complete);
+	});
 
 
-    desc("Default Build");
-    task("default",["version","lint","test"],function(){
-        console.log("\n\nBUILD OK");
+	//**** Supporting tasks
 
-    });
+	desc("Check Node version");
+	task("version", function() {
+		console.log("Checking Node version: .");
 
-    desc("Run a localhost server");
-    task("run",function(){
-        console.log("Run http-server here");
-        jake.exec("node node_modules/http-server/bin/http-server src",{interactive:true},complete);
-    });
-   
-    /*Supporting Task*/
-    desc("Check Node Version");
-    task("version",function(){
-    console.log("Checking Node Version:");
-    var packageJson = require("./package.json");
-    var expectedVersion = packageJson.engines.node;
+		var packageJson = require("./package.json");
+		var expectedVersion = packageJson.engines.node;
 
-    var actualVersion = process.version;
-    if (semver.neq(actualVersion,expectedVersion)) {
-        fail("Incorrect Node Version : expected node version : "+expectedVersion+" but was : "+actualVersion);
-    }
-    });
+		var actualVersion = process.version;
+		if (semver.neq(expectedVersion, actualVersion)) {
+			fail("Incorrect Node version: expected " + expectedVersion + ", but was " + actualVersion);
+		}
+	});
 
-    desc("Lint the Code");
-    task("lint",function(){
-        process.stdout.write("Linting JavaScript:");
-        jshint.checkFiles({
-            files:["Jakefile.js","src/**/*.js"],
-            options:lintOptions(),
-            globals:lintGlobals()
-        },complete,fail);
-    },{async:true});
+	desc("Lint JavaScript code");
+	task("lint", function() {
+		process.stdout.write("Linting JavaScript: ");
 
-    desc("Run tests");
+		jshint.checkFiles({
+			files: [ "Jakefile.js", "src/**/*.js" ],
+			options: lintOptions(),
+			globals: lintGlobals()
+		}, complete, fail);
+	}, { async: true });
+
+	desc("Run tests");
 	task("test", function() {
 		console.log("Testing JavaScript:");
 		karma.run({
 			configFile: KARMA_CONFIG,
-			
+			expectedBrowsers: [
+				"Firefox 44.0.0 (Ubuntu 0.0.0)",
+				"Chrome 48.0.2564 (Linux 0.0.0)"
+			],
 			strict: !process.env.loose
 		}, complete, fail);
 	}, { async: true });
 
-    function lintOptions() {
+
+	function lintOptions() {
 		return {
 			bitwise: true,
 			eqeqeq: true,

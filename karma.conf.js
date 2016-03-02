@@ -1,5 +1,5 @@
 // Karma configuration
-// Generated on Wed Mar 02 2016 21:36:54 GMT+0530 (IST)
+// Generated on Wed Mar 02 2016 23:22:08 GMT+0530 (IST)
 
 module.exports = function(config) {
   config.set({
@@ -60,10 +60,6 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false,
-
-    // Concurrency level
-    // how many browser should be started simultaneous
-    concurrency: Infinity
+    singleRun: false
   })
 }
