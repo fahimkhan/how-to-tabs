@@ -32,6 +32,12 @@
 		jake.exec("node node_modules/http-server/bin/http-server "+DIST_DIR, { interactive: true }, complete);
 	});
 
+	desc("Erase all generated files")
+	task("clean",function(){
+		console.log("Erasing generated files.");
+		shell.rm("-rf","generated");
+	});
+
 
 	//**** Supporting tasks
 
@@ -74,14 +80,12 @@
 
 	desc("Build distribution directory");
 	task("build",[ DIST_DIR ],function(){
-		console.log("Building Distribution Directory");
+		console.log("Building Distribution Directory: .");
+		shell.rm("-rf",DIST_DIR+"/*");
+		shell.cp("src/index.html",DIST_DIR);
 	});
 
-	desc("Erase all generated files")
-	task("clean",function(){
-		console.log("Erasing generated files.");
-		shell.rm("-rf","generated");
-	});
+
 
 	directory(DIST_DIR);
 
