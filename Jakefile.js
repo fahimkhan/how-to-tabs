@@ -1,5 +1,5 @@
 // Copyright (c) 2015 Titanium I.T. LLC. All rights reserved. For license, see "README" or "LICENSE" file.
-/* globals jake:false, desc:false, task:false, complete:false, fail:false */
+/* globals jake:false, desc:false, task:false, complete:false, fail:false ,directory:false*/
 
 (function() {
 	"use strict";
@@ -30,7 +30,7 @@
 	desc("Run a localhost server");
 	task("run",["build"], function() {
 		jake.exec("node node_modules/http-server/bin/http-server "+DIST_DIR, { interactive: true }, complete);
-	});
+	}, { async: true });
 
 	desc("Erase all generated files");
 	task("clean",function(){
@@ -87,7 +87,7 @@
 		jake.exec("node node_modules/browserify/bin/cmd.js  src/javascript/app.js -o "+DIST_DIR+"/bundle.js",
 		 { interactive: true },
 		  complete);
-	});
+	}, { async: true });
 
 
 
