@@ -3,7 +3,7 @@
 	"use strict";
 
     var addition = require("./addition.js");
-    var assert = ("./assert.js");
+    var assert = require("./assert.js");
 
 	describe("Addition", function() {
 
