@@ -14,10 +14,20 @@
 		it("uses IEEE 754 floating point", function() {
 			assert.equal(addition.add(0.1, 0.2), 0.30000000000000004);
 		});
+	});
+	
+	describe("Subtraction", function() {
 
+		it("Subtraction of Positive Number",function(){
+			assert.equal(addition.subtract(10,3),7);
+		});
 		
 
 	});
+		
+
+	
+	
 
 
 }());
