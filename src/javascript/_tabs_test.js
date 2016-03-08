@@ -7,12 +7,24 @@
 
 	
 	describe("Tabs", function() {
-		it("Sets a class on an element",function(){
+		it("Sets a class on an element when an element has no existing class",function(){
 
 			var element = addElement("div");
 			tabs.initialize(element,"someClass");
 			assert.equal(getClass(element),"someClass");
 			removeElement(element);
+		});
+
+		it("Sets class on an element without erasing an existing class",function(){
+			var element = addElement("div");
+			element.setAttribute("class","existingClass");
+
+			tabs.initialize(element,"newClass");
+
+			assert.equal(getClass(element),"existingClass newClass");
+
+			removeElement(element);
+
 		});
 
 		function getClass(element){
