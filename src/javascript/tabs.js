@@ -4,16 +4,14 @@
 	var classList = require("../vendor/classList.js");
 	classList.shim();
 
-	exports.initialize = function initialize(element,className){
+	exports.initialize = function initialize(elementList,className){
+		elementList.forEach(function(element){
+			element.classList.add(className);
+		});
 
+		var element = elementList[0];
 		element.classList.add(className);
-		//var classes = element.getAttribute("class");
-		//if (classes === null) classes = className;
-		//else classes += " "+className;
-		//element.setAttribute("class",classes);
-
-
-
+	
 	};
 
 
