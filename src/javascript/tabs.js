@@ -1,30 +1,45 @@
+// Copyright (c) 2015 Titanium I.T. LLC. All rights reserved. For license, see "README" or "LICENSE" file.
 (function() {
 	"use strict";
 
 	var classList = require("../vendor/classList.js");
+
 	classList.shim();
 
-	exports.initialize = function initialize(options){
+	exports.initialize = function initialize(options) {
 		var tabs = options.tabs;
 		var content = options.content;
-		var defaultElement = options.default;
+		var defaultTab = options.defaultTab;
 		var activeTabClass = options.activeTabClass;
-		var contentHideClass = options.contentHideClass;
+		var hiddenContentClass = options.hiddenContentClass;
 
-		if (tabs === undefined) throw new Error("Expected options.tabs");
-		if (content === undefined) throw new Error("Expected options.content");
-		if (defaultElement === undefined) throw new Error("Expected options.default");
-		if (activeTabClass === undefined) throw new Error("Expected options.activeTabClass");
-		if (contentHideClass === undefined) throw new Error("Expected options.contentHideClass");
+		checkOption(tabs, "options.tabs");
+		checkOption(content, "options.content");
+		checkOption(defaultTab, "options.defaultTab");
+		checkOption(activeTabClass, "options.activeTabClass");
+		checkOption(hiddenContentClass, "options.hiddenContentClass");
+
+
+		var activeIndex = findIndexOfDefaultElement(tabs, defaultTab);
+		var defaultContent = content[activeIndex];
 
 		content.forEach(function(element) {
-			element.classList.add(contentHideClass);
+			element.classList.add(hiddenContentClass);
 		});
-		defaultElement.classList.remove(contentHideClass);
 
-		if (tabs !== undefined) tabs[0].classList.add(activeTabClass);
+		defaultContent.classList.remove(hiddenContentClass);
+		defaultTab.classList.add(activeTabClass);
 	};
 
+	function findIndexOfDefaultElement(contentTabs, defaultContentTab) {
+		for (var i = 0; i < contentTabs.length; i++) {
+			if (contentTabs[i] === defaultContentTab) return i;
+		}
+		throw new Error("Could not find default in list");
+	}
 
+	function checkOption(option, name) {
+		if (option === undefined) throw new Error("Expected " + name);
+	}
 
 }());
