@@ -1,4 +1,3 @@
-// Copyright (c) 2015 Titanium I.T. LLC. All rights reserved. For license, see "README" or "LICENSE" file.
 (function() {
 	"use strict";
 
@@ -19,8 +18,8 @@
 
 	function handleClicks(options) {
 		options.tabs.forEach(function(tabElement) {
-			tabElement.addEventListener("click", function(event) {
-				showTab(event.target, options);
+			tabElement.addEventListener("click", function() {
+				showTab(tabElement, options);
 			});
 		});
 	}
@@ -40,11 +39,11 @@
 		contentToShow.classList.remove(options.hiddenContentClass);
 	}
 
-	function findIndex(contentTabs, defaultContentTab) {
+	function findIndex(contentTabs, tabToShow) {
 		for (var i = 0; i < contentTabs.length; i++) {
-			if (contentTabs[i] === defaultContentTab) return i;
+			if (contentTabs[i] === tabToShow) return i;
 		}
-		throw new Error("Could not find default in list");
+		throw new Error("Could not find tab to show: " + tabToShow.outerHTML);
 	}
 
 	function checkOption(option, name) {

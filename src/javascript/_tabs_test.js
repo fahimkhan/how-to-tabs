@@ -1,4 +1,3 @@
-// Copyright (c) 2015 Titanium I.T. LLC. All rights reserved. For license, see "README" or "LICENSE" file.
 (function() {
 	"use strict";
 
@@ -88,6 +87,25 @@
 
 			tab3.click();
 			assertContentVisible(content3, "should be able to click multiple tabs");
+		});
+
+		it("handles clicks on sub-elements within tabs", function() {
+			var defaultTab = createTab();
+
+			var complexTab = addElement("div");
+			complexTab.innerHTML = "<a id='link'>link</a>";
+			var link = document.getElementById("link");
+
+			tabs.initialize({
+				tabs: [ defaultTab, complexTab ],
+				content: [ createTabContent(), createTabContent() ],
+				defaultTab: defaultTab,
+				activeTabClass: ACTIVE_TAB,
+				hiddenContentClass: IRRELEVANT
+			});
+
+			link.click();
+			assertTabActive(complexTab);
 		});
 
 		it("preserves existing classes when adding new classes", function() {

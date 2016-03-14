@@ -2,8 +2,8 @@
 	"use strict";
 
 	var tabs = require("./tabs.js");
-	
-	document.addEventListener("DOMContentLoaded",function(){
+
+	document.addEventListener("DOMContentLoaded", function() {
 		var tab1 = document.getElementById("tab1");
 		var tab2 = document.getElementById("tab2");
 		var tab3 = document.getElementById("tab3");
@@ -13,13 +13,13 @@
 		var content3 = document.getElementById("content3");
 
 		tabs.initialize({
-				tabs: [tab1 , tab2, tab3],
-				content: [ content1, content2, content3 ],
-				defaultTab: tab1,
-				activeTabClass: "active",
-				hiddenContentClass: "hidden"
-			});
+			tabs: [ tab1, tab2, tab3 ],
+			content: [ content1, content2, content3 ],
+			defaultTab: tab1,
+			activeTabClass: "active",
+			hiddenContentClass: "hidden"
+		});
 	});
-	
+
 
 }());
