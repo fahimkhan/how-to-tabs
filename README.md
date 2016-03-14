@@ -3,9 +3,16 @@ How To:Tabs
 
 
 To Try Code on Your Computer
-============================
+===========================
 
+1. To start Karma
 
-To run the build.
-1.  Install `npm install jake -g`
-2. Run Jake: `jake`
+./jake.sh karma
+
+2. To start web server
+
+./jake.sh run
+
+3. To test on browser
+
+./jake.sh   (First,You have to start karma as shown in step 1)
