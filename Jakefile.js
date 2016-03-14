@@ -1,5 +1,4 @@
-// Copyright (c) 2015 Titanium I.T. LLC. All rights reserved. For license, see "README" or "LICENSE" file.
-/* globals jake:false, desc:false, task:false, complete:false, fail:false ,directory:false*/
+/* globals jake:false, desc:false, task:false, complete:false, fail:false, directory:false */
 
 (function() {
 	"use strict";
@@ -28,14 +27,14 @@
 	});
 
 	desc("Run a localhost server");
-	task("run",["build"], function() {
-		jake.exec("node node_modules/http-server/bin/http-server "+DIST_DIR, { interactive: true }, complete);
+	task("run", [ "build" ], function() {
+		jake.exec("node node_modules/http-server/bin/http-server " + DIST_DIR, { interactive: true }, complete);
 	}, { async: true });
 
 	desc("Erase all generated files");
-	task("clean",function(){
-		console.log("Erasing generated files.");
-		shell.rm("-rf","generated");
+	task("clean", function() {
+		console.log("Erasing generated files: .");
+		shell.rm("-rf", "generated");
 	});
 
 
@@ -71,27 +70,33 @@
 		karma.run({
 			configFile: KARMA_CONFIG,
 			expectedBrowsers: [
-				"Firefox 44.0.0 (Ubuntu 0.0.0)",
-				"Chrome 48.0.2564 (Linux 0.0.0)"
+				"Firefox 43.0.0 (Mac OS X 10.10.0)",
+				"Chrome 47.0.2526 (Mac OS X 10.10.5)",
+				"IE 11.0.0 (Windows 7 0.0.0)",
+				"IE 9.0.0 (Windows 7 0.0.0)",
+				"Safari 9.0.2 (Mac OS X 10.10.5)",
+				"Mobile Safari 9.0.0 (iOS 9.2.0)",
+				"Chrome Mobile 44.0.2403 (Android 6.0.0)"
 			],
 			strict: !process.env.loose
 		}, complete, fail);
 	}, { async: true });
 
 	desc("Build distribution directory");
-	task("build",[ DIST_DIR ],function(){
-		console.log("Building Distribution Directory: .");
-		shell.rm("-rf",DIST_DIR+"/*");
-		shell.cp("src/content/*",DIST_DIR);
+	task("build", [ DIST_DIR ], function() {
+		console.log("Building distribution directory: .");
 
-		jake.exec("node node_modules/browserify/bin/cmd.js  src/javascript/app.js -o "+DIST_DIR+"/bundle.js",
-		 { interactive: true },
-		  complete);
+		shell.rm("-rf", DIST_DIR + "/*");
+		shell.cp("src/content/*", DIST_DIR);
+
+		jake.exec(
+			"node node_modules/browserify/bin/cmd.js -r ./src/javascript/tabs.js:tabs -o " + DIST_DIR + "/bundle.js",
+			{ interactive: true },
+			complete);
 	}, { async: true });
 
-
-
 	directory(DIST_DIR);
+
 
 
 	function lintOptions() {
